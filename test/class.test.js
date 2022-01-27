@@ -2,7 +2,7 @@ const People = require("../src/people.class");
 const { expect } = require("chai");
 const sinon = require("sinon");
 
-describe("interacting with people class", function () {
+describe.skip("interacting with people class", function () {
   const person = new People("Yamah", "Skating");
 
   it("person name equal Yamah", function () {
@@ -24,15 +24,29 @@ describe("interacting with people class", function () {
 
 describe("spy on function call", function () {
   const person = new People("Gbemu", "Swimming");
-  const spy = sinon.spy(person, "getPost");
+  const spy = sinon.spy(person, "sayHi");
 
-  it("call getPosts() only once", function () {
-    person.getPost(14);
-
+  it("call sayHi() only once", function () {
+    person.sayHi("Coders");
     expect(spy.calledOnce).to.be.true;
   });
 
-  it("call getPosts() with argument 14", function () {
-    expect(spy.calledWith(14)).to.be.true;
+  it("call sayHi() with argument 'Coders'", function () {
+    expect(spy.calledWith("Coders")).to.be.true;
+  });
+});
+
+describe("api calls", function () {
+  const person = new People("Gbemu", "Swimming");
+  const postsStub = sinon.stub(person, "getPost");
+  postsStub.withArgs(4).returns({
+    id: 4,
+    title: "Gbemu at grammy awards",
+    message:
+      "Sint exercitation ea culpa magna dolore irure ex eu cupidatat irure."
+  });
+
+  it("mock result for api call", function () {
+    expect(person.getPost(4)).to.haveOwnProperty("message");
   });
 });

@@ -6,8 +6,8 @@ class People {
     this.hobby = hobby;
   }
 
-  sayHi() {
-    return `Hello I am ${this.name} and I like ${this.hobby}`;
+  sayHi(aud) {
+    return `Hello ${aud}, I am ${this.name} and I like ${this.hobby}`;
   }
 
   async getPost(num) {
