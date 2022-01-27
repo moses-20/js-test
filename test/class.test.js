@@ -1,5 +1,6 @@
 const People = require("../src/people.class");
 const { expect } = require("chai");
+const sinon = require("sinon");
 
 describe("interacting with people class", function () {
   const person = new People("Yamah", "Skating");
@@ -18,5 +19,20 @@ describe("interacting with people class", function () {
 
   it("return person's post", async function () {
     expect(await person.getPost(1)).to.haveOwnProperty("title");
+  });
+});
+
+describe("spy on function call", function () {
+  const person = new People("Gbemu", "Swimming");
+  const spy = sinon.spy(person, "getPost");
+
+  it("call getPosts() only once", function () {
+    person.getPost(14);
+
+    expect(spy.calledOnce).to.be.true;
+  });
+
+  it("call getPosts() with argument 14", function () {
+    expect(spy.calledWith(14)).to.be.true;
   });
 });
